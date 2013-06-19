@@ -1,0 +1,37 @@
+
+futuro
+======
+
+A package for experimentation with the Python `concurrent.futures`_ module.
+
+futuro aims to provide a nice and Pythonic way to deal with dependency
+relationships in async computations.
+
+The package provides two ways to achieve this:
+
+- TasksGroups: a class that tracks functions and their dependencies. It can
+  take an executor with multiple workers and run all functions respecting
+  their dependencies.
+
+- ImplicitFutures: instances of these class are like normal futures, i.e. the
+  result of an async computation. Unlike normal Futures ImplicitFutures become
+  their result when an operation is applied on them (e.g. a method is called)
+
+Take a look at the examples folder to see them in action.
+
+I have been asked one question many times so I thought it was better to answer
+it here: Are you planning to try to get these functions and classes in the standard
+library `concurrent.futures` package?
+
+No. I do think that there is value in the ability to execute functions with
+dependencies. But this implementation is very premature. In addition the async
+landscape in Python will change once that `PEP3156`_ is implemented.
+
+Additionally, `ImplicitFuture` depends on the ability to replace all references to
+an object by a reference to another object. This is now done using a function taken
+from `pyjack`_ which uses the `gc` package and therefore is CPython specific.
+
+
+.. _`pyjack`: https://github.com/cart0113/pyjack
+.. _`concurrent.futures`: http://docs.python.org/3/library/concurrent.futures.html
+.. _`PEP3156`: http://www.python.org/dev/peps/pep-3156/
